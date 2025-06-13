@@ -4,18 +4,18 @@ Coursework for advanced version of the compiler course (CS241E). Due to the natu
 ## Compiler Frontend
 
 ### Scanning
-Used DFAs + a [Maximal Munch](https://en.wikipedia.org/wiki/Maximal_munch) scanner where it scans greedily to find the longest token before continuing to the next input. Consider an output sequence of non-empty words w_1, w_2, … w_n where w is a word and L is the language of valid tokens
+Used DFAs + a [Maximal Munch](https://en.wikipedia.org/wiki/Maximal_munch) scanner where it scans greedily to find the longest token before continuing to the next input. Consider an output sequence of non-empty words $w_1, w_2, \dots w_n$ where w is a word and L is the language of valid tokens
 
-Concatenate w_1w_2…w_n = w
-Each word is valid for all i \in L
-Each w_i is the longest prefix remainder of input w_iw_i+1…w_n in L
+- Concatenate $w_1w_2 \dots w_n = w$
+- Each word is valid for all $i \in L$
+- Each w_i is the longest prefix remainder of input $w_iw_{i+1} \dots w_n$ in L
 
 We can do so by running the following algorithm
 
-Run DFA for L on remaining input until DFA gets stuck or end of input
-If the state is non accepting, backtrack DFA to last accepted state. If no accepted state and it is all visited, return no solution
-We output the token to an accepting state
-Reset DFA and go back to step 1
+- Run DFA for L on remaining input until DFA gets stuck or end of input
+- If the state is non accepting, backtrack DFA to last accepted state. If no accepted state and it is all visited, return no solution
+- We output the token to an accepting state
+- Reset DFA and go back to step 1
 
 ### Parsing and building AST
 We use a [CYK](https://en.wikipedia.org/wiki/CYK_algorithm) parser where it takes an input context-free grammar G and it determines whether the word is language G and constructs the associated parse tree. The following is the pseudocode of the algorithm used
@@ -49,9 +49,9 @@ We also memoize this to ensure that we do not repeat computations.
 ### Type Checking
 To check if a parse tree is valid corresponding to the Lacs specification:
 For each Lacs grammar rule that could be the production rule expanding the root node of tree E, there's only one type inference rule that could be applied
-It looks at the grammar production rule in root node of E and implements the inference rule corresponding to production rule
-When implementing the inference rule, the type checker determines values for meta-variables from the tree and symbol table
-The symbol table maps names to variables/procedures and their types
+- It looks at the grammar production rule in root node of E and implements the inference rule corresponding to production rule
+- When implementing the inference rule, the type checker determines values for meta-variables from the tree and symbol table
+- The symbol table maps names to variables/procedures and their types
 
 ### IR Translator
 Based on the parse tree from the parser, typer and the context-sensitive information from the symbol table. IR is generated and is passed to the middle end of the compiler.
@@ -63,9 +63,9 @@ Optimizations currently not implemented
 
 ### Variable Elimination
 Variables are abstracted as offsets from the frame pointer. We use `eliminateVarAccesses` by differentiating it into various types
-Local variables: Access via relative frame pointer (offset)
-Parameters: Access through parameter pointer and offset of the parameter chunk
-Nested Procedures: Following the static link n times where n = depth(current procedure) - depth(procedure declaring the var)
+- Local variables: Access via relative frame pointer (offset)
+- Parameters: Access through parameter pointer and offset of the parameter chunk
+- Nested Procedures: Following the static link n times where n = depth(current procedure) - depth(procedure declaring the var)
 
 ### Register Allocation
 The register allocation phase also assign variables to MIPS register or memory by
