@@ -56,9 +56,6 @@ For each Lacs grammar rule that could be the production rule expanding the root 
 ### IR Translator
 Based on the parse tree from the parser, typer and the context-sensitive information from the symbol table. IR is generated and is passed to the middle end of the compiler.
 
-## Middle End 
-Optimizations currently not implemented
-
 ## Back End
 
 ### Variable Elimination
